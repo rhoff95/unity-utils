@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace rhoff95.UnityUtils
+namespace Editor
 {
     [CustomPropertyDrawer(typeof(TagSelectorAttribute))]
     public class TagSelectorPropertyDrawer : PropertyDrawer

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Test
+namespace Scripts
 {
     [RequireComponent(typeof(PlayerInputManager))]
     public class PlayerManager : MonoBehaviour

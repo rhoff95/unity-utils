@@ -1,6 +1,6 @@
 ﻿﻿using UnityEngine;
  
- namespace rhoff95.UnityUtils
+ namespace Scripts
 {
     public class TagSelectorAttribute : PropertyAttribute
     {
