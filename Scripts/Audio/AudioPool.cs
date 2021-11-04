@@ -7,7 +7,7 @@ namespace Scripts.Audio
     public class AudioPool : MonoBehaviour
     {
         private readonly List<AudioSource> _audioSources = new List<AudioSource>();
-        
+
         public void Play(AudioClip audioClip)
         {
             var availableAudioSource =
@@ -25,6 +25,12 @@ namespace Scripts.Audio
 
             availableAudioSource.clip = audioClip;
             availableAudioSource.Play();
+        }
+
+        public void Play(AudioClip[] audioClips)
+        {
+            var audioClip = audioClips[Random.Range(0, audioClips.Length)];
+            Play(audioClip);
         }
     }
 }
