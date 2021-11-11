@@ -6,6 +6,10 @@ namespace Scripts.Audio
 {
     public class AudioPool : MonoBehaviour
     {
+        [Header("Audio Source Defaults")]
+        [SerializeField] [Range(0f, 1f)] private float volume = 1f;
+        [SerializeField] [Range(-3f, 3f)] private float pitch = 1f;
+        
         private readonly List<AudioSource> _audioSources = new List<AudioSource>();
 
         public void Play(AudioClip audioClip)
@@ -18,6 +22,8 @@ namespace Scripts.Audio
                 var audioSource = gameObject.AddComponent<AudioSource>();
                 audioSource.playOnAwake = false;
                 audioSource.loop = false;
+                audioSource.volume = volume;
+                audioSource.pitch = pitch;
 
                 _audioSources.Add(audioSource);
                 availableAudioSource = audioSource;
@@ -30,6 +36,12 @@ namespace Scripts.Audio
         public void Play(AudioClip[] audioClips)
         {
             var audioClip = audioClips[Random.Range(0, audioClips.Length)];
+            Play(audioClip);
+        }
+        
+        public void Play(List<AudioClip> audioClips)
+        {
+            var audioClip = audioClips[Random.Range(0, audioClips.Count)];
             Play(audioClip);
         }
     }
