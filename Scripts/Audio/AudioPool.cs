@@ -35,12 +35,20 @@ namespace Scripts.Audio
 
         public void Play(AudioClip[] audioClips)
         {
+            if (audioClips == null || audioClips.Length == 0)
+            {
+                return;
+            }
             var audioClip = audioClips[Random.Range(0, audioClips.Length)];
             Play(audioClip);
         }
         
         public void Play(List<AudioClip> audioClips)
         {
+            if (audioClips == null || audioClips.Count == 0)
+            {
+                return;
+            }
             var audioClip = audioClips[Random.Range(0, audioClips.Count)];
             Play(audioClip);
         }
