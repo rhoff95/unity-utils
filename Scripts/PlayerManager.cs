@@ -9,7 +9,7 @@ namespace Scripts
     {
         private PlayerInputManager _pim;
 
-        [Range(0, 4)] public int playersToJoin = 0;
+        [Range(0, 4)] public int playersToJoin;
         // PlayerInputManager does not expose playerPrefab in the editor when manually joining.
         public GameObject playerPrefab;
 
@@ -48,9 +48,11 @@ namespace Scripts
             {
                 if (i >= controlSchemes.Length)
                 {
-                    Debug.LogWarning($"Cannot create player ({i}), available control scheme not found.");
+                    Debug.LogWarning(
+                        $"Cannot create player ({i}), available control scheme not found.");
                     break;
                 }
+
                 var controlSchemeTarget = controlSchemes[i];
 
                 InputControlScheme.MatchResult preferredDeviceMatch = default;

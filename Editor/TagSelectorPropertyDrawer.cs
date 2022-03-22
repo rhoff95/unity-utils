@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Scripts;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace Editor
@@ -18,13 +19,14 @@ namespace Editor
 
                 if (attrib.UseDefaultTagFieldDrawer)
                 {
-                    property.stringValue = EditorGUI.TagField(position, label, property.stringValue);
+                    property.stringValue =
+                        EditorGUI.TagField(position, label, property.stringValue);
                 }
                 else
                 {
                     //generate the taglist + custom tags
-                    var tagList = new List<string> {"<NoTag>"};
-                    tagList.AddRange(UnityEditorInternal.InternalEditorUtility.tags);
+                    var tagList = new List<string> { "<NoTag>" };
+                    tagList.AddRange(InternalEditorUtility.tags);
                     var propertyString = property.stringValue;
                     var index = -1;
                     if (propertyString == "")

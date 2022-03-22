@@ -7,7 +7,7 @@ namespace Scripts.Audio
     public class BackgroundMusic : MonoBehaviour
     {
         private const string TrackIndex = "TrackIndex";
-        
+
         [SerializeField] private List<AudioClip> audioClips;
         [SerializeField] private bool playOnAwake = true;
 

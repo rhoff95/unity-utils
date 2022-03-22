@@ -1,15 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Scripts.Audio
 {
     [RequireComponent(typeof(AudioSource))]
     public class AudioBackgroundPlayer : MonoBehaviour
     {
-       
         public AudioClip[] audioClips;
-        
+
         private AudioSource _audioSource;
         private int _audioClipIndex = -1;
 
@@ -36,7 +34,7 @@ namespace Scripts.Audio
                     }
 
                     _audioClipIndex = newAudioClipIndex;
-                    
+
                     _audioSource.clip = audioClips[_audioClipIndex];
                     _audioSource.Play();
                 }

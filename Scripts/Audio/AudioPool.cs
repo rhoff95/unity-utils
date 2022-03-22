@@ -9,7 +9,7 @@ namespace Scripts.Audio
         [Header("Audio Source Defaults")]
         [SerializeField] [Range(0f, 1f)] private float volume = 1f;
         [SerializeField] [Range(-3f, 3f)] private float pitch = 1f;
-        
+
         private readonly List<AudioSource> _audioSources = new List<AudioSource>();
 
         public void Play(AudioClip audioClip)
@@ -39,16 +39,18 @@ namespace Scripts.Audio
             {
                 return;
             }
+
             var audioClip = audioClips[Random.Range(0, audioClips.Length)];
             Play(audioClip);
         }
-        
+
         public void Play(List<AudioClip> audioClips)
         {
             if (audioClips == null || audioClips.Count == 0)
             {
                 return;
             }
+
             var audioClip = audioClips[Random.Range(0, audioClips.Count)];
             Play(audioClip);
         }
