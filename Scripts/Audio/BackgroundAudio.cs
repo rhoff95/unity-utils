@@ -4,40 +4,35 @@ using UnityEngine;
 
 namespace Scripts.Audio
 {
-    public class BackgroundMusic : MonoBehaviour
+    [RequireComponent(typeof(AudioSource))]
+    public class BackgroundAudio : MonoBehaviour
     {
-        private const string TrackIndex = "TrackIndex";
-
+        public const string PrefTrackIndex = "TRACK_INDEX";
+        public const string PrefMusicEnabled = "MUSIC_ENABLED";
+        
         [SerializeField] private List<AudioClip> audioClips;
         [SerializeField] private bool playOnAwake = true;
 
-        private static BackgroundMusic _instance;
         private AudioSource _audioSource;
         private int _audioClipIndex;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            _instance = this;
-            DontDestroyOnLoad(transform.gameObject);
             _audioSource = GetComponent<AudioSource>();
             _audioSource.playOnAwake = false;
 
-            _audioClipIndex = PlayerPrefs.GetInt(TrackIndex, 0);
+            _audioClipIndex = PlayerPrefs.GetInt(PrefTrackIndex, 0);
 
             if (_audioClipIndex >= audioClips.Count)
             {
                 _audioClipIndex = 0;
-                PlayerPrefs.SetInt(TrackIndex, _audioClipIndex);
+                PlayerPrefs.SetInt(PrefTrackIndex, _audioClipIndex);
             }
+
+            _audioSource.mute = PlayerPrefs.GetInt(PrefMusicEnabled, 1) == 1;
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (playOnAwake)
             {
@@ -56,15 +51,18 @@ namespace Scripts.Audio
                 _audioClipIndex++;
                 _audioClipIndex %= audioClips.Count;
 
-                PlayerPrefs.SetInt(TrackIndex, _audioClipIndex);
+                PlayerPrefs.SetInt(PrefTrackIndex, _audioClipIndex);
 
                 yield return new WaitForSeconds(clip.length);
             }
         }
-
+        
         public void Mute(bool value)
         {
-            _audioSource.mute = value;
+            if (_audioSource != null)
+            {
+                _audioSource.mute = value;
+            }
         }
     }
 }
