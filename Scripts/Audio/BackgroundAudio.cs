@@ -29,7 +29,9 @@ namespace Scripts.Audio
                 PlayerPrefs.SetInt(PrefTrackIndex, _audioClipIndex);
             }
 
-            _audioSource.mute = PlayerPrefs.GetInt(PrefMusicEnabled, 1) == 1;
+            var muted = PlayerPrefs.GetInt(PrefMusicEnabled, 1) == 0;
+            _audioSource.mute = muted;
+            Mute(muted);
         }
 
         protected virtual void Start()
