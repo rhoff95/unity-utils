@@ -12,6 +12,7 @@ namespace Scripts.Audio
         
         [SerializeField] private List<AudioClip> audioClips;
         [SerializeField] private bool playOnAwake = true;
+        [SerializeField] private bool ignoreListenerPause = false;
 
         private AudioSource _audioSource;
         private int _audioClipIndex;
@@ -20,6 +21,7 @@ namespace Scripts.Audio
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.playOnAwake = false;
+            _audioSource.ignoreListenerPause = ignoreListenerPause;
 
             _audioClipIndex = PlayerPrefs.GetInt(PrefTrackIndex, 0);
 
