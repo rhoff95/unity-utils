@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Plugins.unity_utils.Editor
 {
     [CustomEditor(typeof(ShadowCaster2DTileMap))]
-    public class ShadowCastersGeneratorEditor : UnityEditor.Editor
+    public class ShadowCasterGeneratorEditor : UnityEditor.Editor
     {
 
         public override void OnInspectorGUI()
