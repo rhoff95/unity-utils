@@ -8,13 +8,11 @@ namespace Plugins.unity_utils.Scripts.Lighting
     [RequireComponent(typeof(CompositeCollider2D))]
     public class ShadowCaster2DTileMap : MonoBehaviour
     {
-
         [Space]
         [SerializeField]
         private bool selfShadows = true;
 
-        private CompositeCollider2D tilemapCollider;
-
+        private CompositeCollider2D _tilemapCollider;
 
         static readonly FieldInfo meshField = typeof(ShadowCaster2D).GetField("m_Mesh", BindingFlags.NonPublic | BindingFlags.Instance);
         static readonly FieldInfo shapePathField = typeof(ShadowCaster2D).GetField("m_ShapePath", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -27,19 +25,24 @@ namespace Plugins.unity_utils.Scripts.Lighting
         {
             DestroyAllChildren();
 
-            tilemapCollider = GetComponent<CompositeCollider2D>();
+            _tilemapCollider = GetComponent<CompositeCollider2D>();
 
-            for (int i = 0; i < tilemapCollider.pathCount; i++)
+            for (var i = 0; i < _tilemapCollider.pathCount; i++)
             {
-                Vector2[] pathVertices = new Vector2[tilemapCollider.GetPathPointCount(i)];
-                tilemapCollider.GetPath(i, pathVertices);
-                GameObject shadowCaster = new GameObject("shadow_caster_" + i);
-                shadowCaster.transform.parent = gameObject.transform;
-                ShadowCaster2D shadowCasterComponent = shadowCaster.AddComponent<ShadowCaster2D>();
+                var pathVertices = new Vector2[_tilemapCollider.GetPathPointCount(i)];
+                _tilemapCollider.GetPath(i, pathVertices);
+                var shadowCaster = new GameObject("shadow_caster_" + i)
+                {
+                    transform =
+                    {
+                        parent = gameObject.transform
+                    }
+                };
+                var shadowCasterComponent = shadowCaster.AddComponent<ShadowCaster2D>();
                 shadowCasterComponent.selfShadows = this.selfShadows;
 
-                Vector3[] testPath = new Vector3[pathVertices.Length];
-                for (int j = 0; j < pathVertices.Length; j++)
+                var testPath = new Vector3[pathVertices.Length];
+                for (var j = 0; j < pathVertices.Length; j++)
                 {
                     testPath[j] = pathVertices[j];
                 }
@@ -49,9 +52,6 @@ namespace Plugins.unity_utils.Scripts.Lighting
                 meshField.SetValue(shadowCasterComponent, new Mesh());
                 generateShadowMeshMethod.Invoke(shadowCasterComponent, new object[] { meshField.GetValue(shadowCasterComponent), shapePathField.GetValue(shadowCasterComponent) });
             }
-
-            // Debug.Log("Generate");
-
         }
         public void DestroyAllChildren()
         {
