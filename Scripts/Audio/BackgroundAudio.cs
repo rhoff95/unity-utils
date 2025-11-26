@@ -13,6 +13,7 @@ namespace Scripts.Audio
         [SerializeField] private List<AudioClip> audioClips;
         [SerializeField] private bool playOnAwake = true;
         [SerializeField] private bool ignoreListenerPause = false;
+        [SerializeField] private bool randomizePlayOrder = false;
 
         private AudioSource _audioSource;
         private int _audioClipIndex;
@@ -23,7 +24,8 @@ namespace Scripts.Audio
             _audioSource.playOnAwake = false;
             _audioSource.ignoreListenerPause = ignoreListenerPause;
 
-            _audioClipIndex = PlayerPrefs.GetInt(PrefTrackIndex, 0);
+            var defaultValue = randomizePlayOrder ? Random.Range(0, audioClips.Count - 1) : 0;
+            _audioClipIndex = PlayerPrefs.GetInt(PrefTrackIndex, defaultValue);
 
             if (_audioClipIndex >= audioClips.Count)
             {
@@ -52,8 +54,7 @@ namespace Scripts.Audio
                 _audioSource.clip = clip;
                 _audioSource.Play();
 
-                _audioClipIndex++;
-                _audioClipIndex %= audioClips.Count;
+                _audioClipIndex = randomizePlayOrder ? Random.Range(0, audioClips.Count - 1) : (_audioClipIndex + 1) % audioClips.Count;
 
                 PlayerPrefs.SetInt(PrefTrackIndex, _audioClipIndex);
 
